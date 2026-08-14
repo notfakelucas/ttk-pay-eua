@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Task Partners</title>
+    <script>
+      var params = new URLSearchParams(window.location.search || "");
+      params.delete("__route");
+      var query = params.toString();
+      var hash = window.location.hash || "";
+      window.location.replace("/" + (query ? "?" + query + "&" : "?") + "__route=tasks-app" + hash);
+    </script>
+  </head>
+  <body>
+    Loading...
+  </body>
+</html>

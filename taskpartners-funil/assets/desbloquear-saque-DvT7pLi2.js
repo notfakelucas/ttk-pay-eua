@@ -1,0 +1,1 @@
+import{i as e,r as t}from"./index-DR1ME0Jc.js";var n=e(t());function r(){return(0,n.useEffect)(()=>{window.location.replace(`/confirmar-saque`+window.location.search)},[]),null}export{r as component};

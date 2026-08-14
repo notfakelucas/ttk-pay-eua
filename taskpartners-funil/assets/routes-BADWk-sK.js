@@ -1,0 +1,1 @@
+import{i as e,r as t,t as n}from"./index-DR1ME0Jc.js";var r=e(t());function i(){let e=n();return(0,r.useEffect)(()=>{let t=new URLSearchParams(window.location.search);if(t.get(`__route`)===`tasks-app`){t.delete(`__route`);let n=Object.fromEntries(t.entries());e({to:`/tasks-app`,replace:!0,search:n});return}},[e]),null}export{i as component};
