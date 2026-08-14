@@ -1,0 +1,27 @@
+{
+  "rewrites": [
+    { "source": "/", "destination": "/pages/_root.html" },
+    { "source": "/admin", "destination": "/pages/_admin.html" },
+    { "source": "/back-redirect", "destination": "/pages/_back-redirect.html" },
+    { "source": "/confirmar-saque", "destination": "/pages/_confirmar-saque.html" },
+    { "source": "/contact", "destination": "/pages/_contact.html" },
+    { "source": "/desbloquear-saque", "destination": "/pages/_desbloquear-saque.html" },
+    { "source": "/faq", "destination": "/pages/_faq.html" },
+    { "source": "/historico", "destination": "/pages/_historico.html" },
+    { "source": "/inicio", "destination": "/pages/_inicio.html" },
+    { "source": "/landingpage", "destination": "/pages/_landingpage.html" },
+    { "source": "/lp", "destination": "/pages/_lp.html" },
+    { "source": "/privacy", "destination": "/pages/_privacy.html" },
+    { "source": "/refund", "destination": "/pages/_refund.html" },
+    { "source": "/resgatar", "destination": "/pages/_resgatar.html" },
+    { "source": "/tasks-app", "destination": "/pages/_tasks-app.html" },
+    { "source": "/terms", "destination": "/pages/_terms.html" },
+    { "source": "/thanks", "destination": "/pages/_thanks.html" },
+    { "source": "/up1", "destination": "/pages/_up1.html" },
+    { "source": "/upsell-1", "destination": "/pages/_upsell-1.html" },
+    { "source": "/upsell-2", "destination": "/pages/_upsell-2.html" },
+    { "source": "/upsell-3", "destination": "/pages/_upsell-3.html" },
+    { "source": "/upsell-4", "destination": "/pages/_upsell-4.html" },
+    { "source": "/upsell-5", "destination": "/pages/_upsell-5.html" }
+  ]
+}
