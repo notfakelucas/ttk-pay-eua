@@ -18,6 +18,7 @@
     { "source": "/terms", "destination": "/pages/_terms.html" },
     { "source": "/thanks", "destination": "/pages/_thanks.html" },
     { "source": "/up1", "destination": "/pages/_up1.html" },
+    { "source": "/up1/index.html", "destination": "/pages/_up1.html" },
     { "source": "/upsell-1", "destination": "/pages/_upsell-1.html" },
     { "source": "/upsell-2", "destination": "/pages/_upsell-2.html" },
     { "source": "/upsell-3", "destination": "/pages/_upsell-3.html" },
