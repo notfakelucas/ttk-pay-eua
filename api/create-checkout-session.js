@@ -25,25 +25,40 @@ const PRODUCTS = {
 };
 
 module.exports = async (req, res) => {
+  const query = req.query || {};
+  const embedded = String(query.mode || "") === "embedded";
+
+  const fail = (statusCode, message) => {
+    res.statusCode = statusCode;
+    if (embedded) {
+      res.setHeader("Content-Type", "application/json");
+      res.end(JSON.stringify({ error: message }));
+    } else {
+      res.end(message);
+    }
+  };
+
   const secretKey = process.env.STRIPE_SECRET_KEY;
   if (!secretKey) {
-    res.statusCode = 500;
-    res.end("Stripe is not configured.");
+    fail(500, "Stripe is not configured.");
+    return;
+  }
+  const publishableKey = process.env.STRIPE_PUBLISHABLE_KEY;
+  if (embedded && !publishableKey) {
+    fail(500, "Stripe is not configured.");
     return;
   }
 
-  const query = req.query || {};
   const product = PRODUCTS[String(query.product || "")];
   if (!product) {
-    res.statusCode = 400;
-    res.end("Unknown product.");
+    fail(400, "Unknown product.");
     return;
   }
 
   const origin = `https://${req.headers.host}`;
   const passthrough = new URLSearchParams();
   for (const [key, value] of Object.entries(query)) {
-    if (key === "product" || value == null) continue;
+    if (key === "product" || key === "mode" || value == null) continue;
     passthrough.set(key, String(value));
   }
   // Strip any stale order/valor carried over from a previous purchase's
@@ -73,16 +88,22 @@ module.exports = async (req, res) => {
           quantity: 1,
         },
       ],
-      success_url: successUrl,
-      cancel_url: cancelUrl,
       metadata: Object.fromEntries(passthrough.entries()),
+      ...(embedded
+        ? { ui_mode: "embedded", return_url: successUrl }
+        : { success_url: successUrl, cancel_url: cancelUrl }),
     });
+
+    if (embedded) {
+      res.setHeader("Content-Type", "application/json");
+      res.end(JSON.stringify({ clientSecret: session.client_secret, publishableKey }));
+      return;
+    }
 
     res.statusCode = 303;
     res.setHeader("Location", session.url);
     res.end();
   } catch (err) {
-    res.statusCode = 502;
-    res.end("Stripe error: " + err.message);
+    fail(502, "Stripe error: " + err.message);
   }
 };
