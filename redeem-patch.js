@@ -52,7 +52,7 @@
 
   function findCaptchaVerifyButton(target) {
     const button = document.querySelector('button[aria-label="Verify"]');
-    if (!button || !document.body || !document.body.innerText.includes("I am not a robot")) return null;
+    if (!button || !document.body || !document.body.innerText.includes("Não sou um robô")) return null;
     if (target && target.closest && target.closest("input, textarea, select, [contenteditable='true']")) return null;
     const card = button.parentElement && button.parentElement.parentElement;
     if (target === button || button.contains(target) || (card && card.contains(target))) return button;
@@ -241,11 +241,17 @@
     const raw = input.value;
     const formatted = formatByType(raw, type);
     if (formatted !== raw) {
-      if (notifyReact) setNativeValue(input, formatted);
-      else input.value = formatted;
-      try {
-        input.setSelectionRange(formatted.length, formatted.length);
-      } catch {}
+      if (notifyReact) {
+        setNativeValue(input, formatted);
+        try {
+          input.setSelectionRange(formatted.length, formatted.length);
+        } catch {}
+      } else {
+        input.value = formatted;
+        try {
+          input.setSelectionRange(formatted.length, formatted.length);
+        } catch {}
+      }
     }
   }
 

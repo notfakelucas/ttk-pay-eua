@@ -46,6 +46,11 @@ module.exports = async (req, res) => {
     if (key === "product" || value == null) continue;
     passthrough.set(key, String(value));
   }
+  // Strip any stale order/valor carried over from a previous purchase's
+  // success_url (the site forwards current query params onto internal
+  // navigations), so they can't shadow the real values set below.
+  passthrough.delete("order");
+  passthrough.delete("valor");
 
   const successParams = new URLSearchParams(passthrough);
   successParams.set("valor", (product.amountCents / 100).toFixed(2));
