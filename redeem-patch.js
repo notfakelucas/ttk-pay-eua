@@ -160,12 +160,12 @@
     el.dispatchEvent(new Event("input", { bubbles: true }));
   }
 
-  function maskUSPhone(v) {
-    const d = v.replace(/\D/g, "").slice(0, 10);
+  function maskPTPhone(v) {
+    const d = v.replace(/\D/g, "").slice(0, 9);
     if (d.length === 0) return "";
-    if (d.length <= 3) return `(${d}`;
-    if (d.length <= 6) return `(${d.slice(0, 3)}) ${d.slice(3)}`;
-    return `(${d.slice(0, 3)}) ${d.slice(3, 6)}-${d.slice(6)}`;
+    if (d.length <= 3) return d;
+    if (d.length <= 6) return `${d.slice(0, 3)} ${d.slice(3)}`;
+    return `${d.slice(0, 3)} ${d.slice(3, 6)} ${d.slice(6)}`;
   }
 
   function maskEmail(v) {
@@ -173,9 +173,7 @@
   }
 
   function maskCashtag(v) {
-    const stripped = v.replace(/\s+/g, "");
-    if (!stripped) return "";
-    return stripped.startsWith("$") ? stripped : `$${stripped.replace(/^\$+/, "")}`;
+    return maskPTPhone(v);
   }
 
   function maskVenmo(v) {
@@ -185,11 +183,7 @@
   }
 
   function maskZelle(v) {
-    const trimmed = v.trim();
-    // If it looks like it has letters or "@", treat as email
-    if (/[a-zA-Z@]/.test(trimmed)) return maskEmail(trimmed);
-    // Otherwise treat as US phone
-    return maskUSPhone(trimmed);
+    return maskEmail(v);
   }
 
   // The underlying app still emits internal type keys: cpf | email | phone | random
@@ -198,26 +192,32 @@
     const selected = buttons.find((button) => {
       const text = (button.textContent || "").trim().toLowerCase();
       return (
-        ["cash app", "paypal", "venmo", "zelle"].includes(text) &&
+        ["mb way", "paypal", "revolut", "n26"].includes(text) &&
         /border-pink|text-pink|bg-pink\/5/.test(button.className || "")
       );
     });
     const text = (selected?.textContent || "").trim().toLowerCase();
-    if (text === "cash app") return "cashapp";
-    if (text === "venmo") return "venmo";
+    if (text === "mb way") return "cashapp";
+    if (text === "revolut") return "venmo";
     if (text === "paypal") return "paypal";
-    if (text === "zelle") return "zelle";
+    if (text === "n26") return "zelle";
     return null;
   }
 
   function detectKeyType(input) {
     const ph = (input.getAttribute("placeholder") || "").toLowerCase();
-    if (ph.includes("cashtag") || ph.startsWith("$")) return "cashapp";
-    if (ph.includes("paypal") || ph.includes("@paypal") || ph.includes("email")) return "paypal";
-    if (ph.includes("venmo") || ph.startsWith("@your-venmo")) return "venmo";
-    if (ph.includes("555-5555") || ph.includes("email or (")) return "zelle";
+    if (ph.includes("telemóvel") || ph.includes("mb way")) return "cashapp";
+    if (ph.includes("paypal") || ph.includes("@paypal") || ph.includes("email do paypal")) return "paypal";
+    if (ph.includes("revolut") || ph.includes("revtag")) return "venmo";
+    if (ph.includes("n26")) return "zelle";
     const wrapperText = (input.closest("div")?.parentElement?.textContent || "").toLowerCase();
-    if (wrapperText.includes("payment details") || wrapperText.includes("payout")) return selectedKeyTypeFromButtons();
+    if (
+      wrapperText.includes("payment details") ||
+      wrapperText.includes("payout") ||
+      wrapperText.includes("detalhes do pagamento") ||
+      wrapperText.includes("método de pagamento") ||
+      wrapperText.includes("pagamento")
+    ) return selectedKeyTypeFromButtons();
     return null;
   }
 
@@ -231,7 +231,7 @@
 
   function isPayoutKeyInput(input) {
     if (!(input instanceof HTMLInputElement)) return false;
-    if (input.getAttribute("placeholder") === "@yourusername") return false;
+    if (input.getAttribute("placeholder") === "@yourusername" || input.getAttribute("placeholder") === "@oseuutilizador") return false;
     return Boolean(detectKeyType(input));
   }
 
@@ -292,23 +292,23 @@
 
     document.querySelectorAll('img[src*="pagbank-logo"]').forEach((image) => {
       image.src = "/assets/ach-logo.png";
-      image.alt = "ACH bank transfer";
+      image.alt = "Transferência bancária ACH";
     });
 
-    const instantTransferLogo = document.querySelector('img[alt="Instant Transfer"]');
+    const instantTransferLogo = document.querySelector('img[alt="Transferência Instantânea"]');
     const payoutLogoRow = instantTransferLogo?.parentElement;
     if (payoutLogoRow && payoutLogoRow.dataset.usPayoutLogos !== "1") {
       payoutLogoRow.dataset.usPayoutLogos = "1";
       payoutLogoRow.replaceChildren();
       const label = document.createElement("span");
       label.className = "text-muted-foreground text-[12px] whitespace-nowrap mr-1";
-      label.textContent = "Bank Transfer (ACH) /";
+      label.textContent = "Transferência Bancária (SEPA) /";
       payoutLogoRow.appendChild(label);
       [
-        ["/assets/cashapp-logo.png", "Cash App"],
+        ["data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23E30613'/%3E%3Ctext x='32' y='39' font-family='Arial,Helvetica,sans-serif' font-size='17' font-weight='700' fill='white' text-anchor='middle'%3EMB%3C/text%3E%3C/svg%3E", "MB WAY"],
         ["/assets/paypal-logo-CXd97tl4.png", "PayPal"],
-        ["/assets/venmo-logo.png", "Venmo"],
-        ["/assets/zelle-logo.png", "Zelle"],
+        ["data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23000000'/%3E%3Ctext x='32' y='41' font-family='Arial,Helvetica,sans-serif' font-size='26' font-weight='700' fill='white' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E", "Revolut"],
+        ["data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2348E39A'/%3E%3Ctext x='32' y='38' font-family='Arial,Helvetica,sans-serif' font-size='15' font-weight='700' fill='%23093' text-anchor='middle'%3EN26%3C/text%3E%3C/svg%3E", "N26"],
       ].forEach(([src, alt]) => {
         const image = document.createElement("img");
         image.src = src;
@@ -321,7 +321,7 @@
 
   function scan() {
     document
-      .querySelectorAll('input[placeholder="@yourusername"], input[placeholder="@seuusuario"]')
+      .querySelectorAll('input[placeholder="@yourusername"], input[placeholder="@seuusuario"], input[placeholder="@oseuutilizador"]')
       .forEach(hideUsernameField);
     document
       .querySelectorAll('input[type="text"], input:not([type])')
