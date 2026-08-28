@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#000000">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="referrer" content="no-referrer">
+  <meta name="color-scheme" content="dark">
+  <title>TikTok Rewards</title>
+  
+
+  <!-- Warm the two feed steps immediately. VTurb is intentionally NOT requested here. -->
+  <link rel="preload" href="assets/tiktok-logo.png?v=8" as="image" fetchpriority="high">
+  <link rel="preload" href="assets/avatar01.jpeg?v=8" as="image" fetchpriority="high">
+  <link rel="preload" href="assets/avatar02.jpeg?v=8" as="image">
+  
+  
+
+  <link rel="stylesheet" href="css/style.css?v=20260825-speed1">
+</head>
+<body class="screen-invite">
+  <svg class="svg-sprite" aria-hidden="true" focusable="false">
+    <symbol id="i-wallet" viewBox="0 0 24 24">
+      <path d="M4 7.5A3.5 3.5 0 0 1 7.5 4h8A3.5 3.5 0 0 1 19 7.5V9h-4.6A3.4 3.4 0 0 0 11 12.4v.2a3.4 3.4 0 0 0 3.4 3.4H19v.5a3.5 3.5 0 0 1-3.5 3.5h-8A3.5 3.5 0 0 1 4 16.5v-9Z"/>
+      <path d="M14.4 10.5H21v4h-6.6a2 2 0 1 1 0-4Z"/>
+      <circle cx="15" cy="12.5" r=".7" fill="currentColor" stroke="none"/>
+    </symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24">
+      <rect x="4.5" y="10" width="15" height="10" rx="2.5"/>
+      <path d="M8 10V7.5a4 4 0 0 1 8 0V10"/>
+    </symbol>
+    <symbol id="i-crown" viewBox="0 0 24 24">
+      <path d="m4 7 4.3 4L12 5l3.7 6L20 7l-1.5 9h-13L4 7Z"/>
+      <path d="M6 19h12"/>
+    </symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24"><path d="m13.5 2-8 11H12l-1.5 9 8-11H12l1.5-9Z"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><rect x="6.5" y="5" width="4" height="14" rx="1"/><rect x="13.5" y="5" width="4" height="14" rx="1"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="m8 5 11 7-11 7V5Z" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-volume" viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4V9Z"/><path d="M16 9a4.5 4.5 0 0 1 0 6"/><path d="M18.5 6.5a8 8 0 0 1 0 11"/></symbol>
+    <symbol id="i-muted" viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4V9Z"/><path d="m17 9 5 5M22 9l-5 5"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M20.8 5.8a5.4 5.4 0 0 0-7.6 0L12 7l-1.2-1.2a5.4 5.4 0 1 0-7.6 7.6L12 22l8.8-8.6a5.4 5.4 0 0 0 0-7.6Z"/></symbol>
+    <symbol id="i-comment" viewBox="0 0 24 24"><path d="M21 11.5a8.5 8.5 0 0 1-9 8.5 9.5 9.5 0 0 1-3.4-.6L4 21l1.4-4A8.5 8.5 0 1 1 21 11.5Z"/></symbol>
+    <symbol id="i-bookmark" viewBox="0 0 24 24"><path d="M7 4.5A2.5 2.5 0 0 1 9.5 2h5A2.5 2.5 0 0 1 17 4.5V22l-5-3-5 3V4.5Z"/></symbol>
+    <symbol id="i-share" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.7 10.6 6.6-4.2M8.7 13.4l6.6 4.2"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 2c.7 4.3 2.7 6.3 7 7-4.3.7-6.3 2.7-7 7-.7-4.3-2.7-6.3-7-7 4.3-.7 6.3-2.7 7-7Z"/><path d="M19 15c.3 2 1.2 2.9 3 3.2-1.8.3-2.7 1.2-3 3.2-.3-2-1.2-2.9-3-3.2 1.8-.3 2.7-1.2 3-3.2Z"/></symbol>
+    <symbol id="i-thumbs-up" viewBox="0 0 24 24">
+      <path d="M7.5 10.5 11 3.8c.5-1 1.5-1.6 2.6-1.3 1.2.3 1.9 1.5 1.6 2.7l-.9 4.1h4.9c1.6 0 2.8 1.5 2.4 3l-1.5 6.2a3 3 0 0 1-2.9 2.3H9.7a4 4 0 0 1-2.2-.7"/>
+      <rect x="2.5" y="9.5" width="5" height="11.5" rx="1.5"/>
+    </symbol>
+    <symbol id="i-thumbs-down" viewBox="0 0 24 24">
+      <path d="m7.5 13.5 3.5 6.7c.5 1 1.5 1.6 2.6 1.3 1.2-.3 1.9-1.5 1.6-2.7l-.9-4.1h4.9c1.6 0 2.8-1.5 2.4-3l-1.5-6.2a3 3 0 0 0-2.9-2.3H9.7a4 4 0 0 0-2.2.7"/>
+      <rect x="2.5" y="3" width="5" height="11.5" rx="1.5"/>
+    </symbol>
+  </svg>
+<div class="app-shell" id="appShell">
+<main id="mainContent">
+      <section class="screen screen--active invite-screen" id="screenInvite" data-screen="invite">
+        <div class="invite-brand" aria-label="TikTok">
+          <img class="brand-logo brand-logo--invite" src="assets/tiktok-logo.png?v=8" alt="TikTok">
+        </div>
+
+        <article class="invite-card">
+          <div class="invite-card-inner">
+            <h1>
+              <span>CONGRATULATIONS!</span>
+              <span>YOU'VE BEEN SELECTED</span>
+              <span>FOR TIKTOK REWARDS</span>
+            </h1>
+
+            <div class="earning-badge">Earn up to $59 per evaluation</div>
+
+            <p class="invite-description">
+              Rate short videos, choose your reaction, and continue through your TikTok Rewards experience.
+            </p>
+          </div>
+        </article>
+
+        <button class="unlock-cta" id="startExperience" type="button" style="display:block!important;visibility:visible!important;opacity:1!important;">
+          <span class="cta-shine" aria-hidden="true"></span>
+          <span>START RATING VIDEOS NOW</span>
+        </button>
+
+        <p class="invite-footnote">Your access is ready. Tap above to begin.</p>
+
+        <p class="invite-disclaimer">Independent promotional experience. Not affiliated with or endorsed by TikTok.</p>
+      </section>
+
+      <section class="screen feed-screen" id="screenFeed" data-screen="feed" hidden>
+        <div class="app-header" id="appHeader" hidden>
+              <div class="header-inner">
+                <div class="brand" aria-label="TikTok">
+                  <img class="brand-logo brand-logo--header" src="assets/tiktok-logo.png?v=8" alt="TikTok">
+                </div>
+                <div class="wallet" id="wallet" aria-label="Current balance">
+                  <svg><use href="#i-wallet"></use></svg>
+                  <strong id="balanceValue">$0.00</strong>
+                  <span class="wallet-float" id="walletFloat" aria-hidden="true"></span>
+                </div>
+              </div>
+            </div>
+        <div class="evaluation-reward-card" id="evaluationRewardCard">
+          <span class="evaluation-reward-title">REWARD FOR THIS EVALUATION</span>
+          <strong id="evaluationRewardAmount">$25.26</strong>
+          <small class="evaluation-reward-subtitle">Rate the video below</small>
+        </div>
+
+        <div class="video-card" id="videoCard">
+          <video id="feedVideo" src="assets/video01.mp4?v=9" muted playsinline loop preload="metadata" aria-label="Short-form video"></video>
+          <div class="video-fallback" id="videoFallback" aria-hidden="true"><span></span></div>
+
+          <aside class="social-rail" aria-label="Video actions">
+            <div class="avatar-stack" aria-hidden="true"><img id="profileAvatar" src="assets/avatar01.jpeg?v=8" alt=""><i>+</i></div>
+            <button type="button" class="rail-btn" aria-label="Like"><span class="rail-icon"><svg><use href="#i-heart"></use></svg></span><small id="likeCount">23.6K</small></button>
+            <button type="button" class="rail-btn" aria-label="Comment"><span class="rail-icon"><svg><use href="#i-comment"></use></svg></span><small id="commentCount">587</small></button>
+            <button type="button" class="rail-btn" aria-label="Save"><span class="rail-icon"><svg><use href="#i-bookmark"></use></svg></span><small id="saveCount">2.1K</small></button>
+            <button type="button" class="rail-btn" id="shareBtn" aria-label="Share"><span class="rail-icon"><svg><use href="#i-share"></use></svg></span><small id="shareCount">742</small></button>
+          </aside>
+
+          <div class="video-gradient" aria-hidden="true"></div>
+          <div class="video-meta">
+            <strong id="videoUsername">@olivia_smith</strong>
+            <p id="videoDescription">Oddly satisfying motion ✨</p>
+            <small id="videoTags">#satisfying #fyp #viral</small>
+          </div>
+        </div>
+
+        <section class="reaction-section" aria-label="Rate this video">
+          <div class="reaction-grid" id="reactionGrid" role="group" aria-label="Like or dislike this video"></div>
+        </section>
+      </section>
+
+      <section class="screen spin-screen" id="screenSpin" data-screen="spin" hidden>
+        <div class="spin-card">
+          <h1>BONUS SPIN</h1>
+          <p>Spin to unlock up to <strong>5X</strong></p>
+        </div>
+
+        <div class="wheel-zone" id="wheelZone">
+          <div class="wheel-pointer-wrap" id="wheelPointer"><div class="wheel-pointer"></div></div>
+          <div class="wheel-shell" id="wheelShell">
+            <div class="wheel-rotator" id="wheelRotator" aria-label="Bonus wheel"></div>
+            <div class="wheel-center" aria-hidden="true"><svg><use href="#i-bolt"></use></svg></div>
+          </div>
+        </div>
+
+        <button class="spin-button" id="spinButton" type="button">SPIN NOW</button>
+        <button class="continue-button" id="continueToVsl" type="button" hidden>CONTINUE</button>
+        <div class="spin-result" id="spinResult" hidden>
+          <strong id="spinResultTitle">5X BONUS UNLOCKED</strong>
+          <span id="spinResultText">Your bonus has been applied to your balance.</span>
+        </div>
+      </section>
+
+      <section class="screen vsl-screen" id="screenVsl" data-screen="vsl" hidden>
+        <div class="vsl-top-group">
+<div class="vsl-copy">
+          <h1>Unlock your <span>access</span> now</h1>
+
+          <p class="vsl-subtitle vsl-subtitle--alert">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"></path>
+              <path d="M12 9v4"></path>
+              <path d="M12 17h.01"></path>
+            </svg>
+            <span>Watch the short presentation below to continue.</span>
+          </p>
+        </div>
+        </div>
+
+        <div class="vsl-wrapper" id="vslWrapper">
+          <div id="vturbLazyMount" aria-live="polite">
+            <div
+              class="vturb-player-placeholder"
+              style="
+                position: relative;
+                width: 100%;
+                padding: 178.21782178217822% 0 0;
+                z-index: 0;
+                background-color: black;
+              "
+            ></div>
+          </div>
+        </div>
+</section>
+    </main>
+  </div>
+
+  <div class="reward-modal" id="rewardModal" hidden>
+    <div class="reward-backdrop"></div>
+
+    <div class="reward-card" role="dialog" aria-modal="true" aria-labelledby="rewardTitle">
+      <div class="reward-icon reward-icon--money" aria-hidden="true">
+        <img src="assets/money-bag.png?v=8" alt="">
+      </div>
+
+      <strong id="modalAmount">+$25.26</strong>
+
+      <h2 id="rewardTitle">Evaluation complete</h2>
+      <p>Your balance has been updated.</p>
+
+      <small><i></i> Next video loading</small>
+    </div>
+  </div>
+
+      
+      
+</div>
+  </div>
+
+  <div class="confetti-layer" id="confettiLayer" aria-hidden="true"></div>
+
+  <script>
+    !function(i,n){
+      i._plt=i._plt||(n&&n.timeOrigin?n.timeOrigin+n.now():Date.now())
+    }(window,performance);
+  </script>
+
+<script src="js/app.js?v=20260825-speed1"></script>
+</body>
+</html>
