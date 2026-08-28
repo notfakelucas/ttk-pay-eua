@@ -1,8 +1,0 @@
-{
-  "name": "ttk-pay-eua",
-  "private": true,
-  "version": "1.0.0",
-  "dependencies": {
-    "stripe": "^17.4.0"
-  }
-}
