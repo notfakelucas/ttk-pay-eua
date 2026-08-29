@@ -385,7 +385,7 @@ if(location.hostname&&lowerValue.indexOf(location.hostname.toLowerCase())!==-1)r
 try{var parsedValue=new URL(value);if(parsedValue.protocol==='http:'||parsedValue.protocol==='https:')return;}catch(ignore){}
 checkoutParams.append(k,value);
 });
-var next=new URL('https://www.checkout-ds24.com/product/711504');checkoutParams.forEach(function(v,k){next.searchParams.set(k,v)});location.replace(next.toString());
+var next=new URL('https://www.checkout-ds24.com/product/711504');checkoutParams.forEach(function(v,k){next.searchParams.set(k,v)});next.hash='page';location.replace(next.toString());
 }).catch(function(e){console.error(e);if(button){button.disabled=false;button.textContent='Continue';}alert('Unable to continue. Please try again.');});
 return false;
 });
