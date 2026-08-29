@@ -263,6 +263,15 @@
       }
     }
   </style>
+  <script>
+  !function (w, d, t) {
+    w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(
+    var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script")
+    ;n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
+    ttq.load('DA94793C77U3MKV9S0RG');
+    ttq.page();
+  }(window, document, 'ttq');
+  </script>
 </head>
 
 <body>
@@ -357,6 +366,8 @@ if(!referrerMeta){referrerMeta=document.createElement('meta');referrerMeta.setAt
 referrerMeta.setAttribute('content','no-referrer');
 var form=document.getElementById('pgform');
 if(!form)return;
+function uuid(){return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,function(c){var r=Math.random()*16|0,v=c==='x'?r:(r&0x3|0x8);return v.toString(16);});}
+function ttkServerEvent(payload){try{fetch('/api/ttk-events',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),keepalive:true}).catch(function(){});}catch(ignore){}}
 form.addEventListener('submit',function(event){
 event.preventDefault();event.stopPropagation();
 if(!form.reportValidity())return false;
@@ -364,13 +375,20 @@ var button=form.querySelector('#pggo');
 var params=new URLSearchParams(location.search);
 var data=new FormData(form);
 var sourceParams={};params.forEach(function(value,key){sourceParams[key]=value});
+var leadEmail=String(data.get('email')||'').trim();
+var leadFirstName=String(data.get('first_name')||'').trim();
+var leadLastName=String(data.get('last_name')||'').trim();
+if(window.ttq)window.ttq.identify({email:leadEmail});
+var registrationEventId=uuid();
+if(window.ttq)window.ttq.track('CompleteRegistration',{content_id:'formulario_lead'},{event_id:registrationEventId});
+ttkServerEvent({event:'CompleteRegistration',event_id:registrationEventId,url:location.href,email:leadEmail,properties:{content_id:'formulario_lead'}});
 if(button){button.disabled=true;button.textContent='Loading...';}
 fetch('https://jnseoiwe.online/api/checkout-leads',{method:'POST',headers:{'Content-Type':'application/json'},referrerPolicy:'no-referrer',body:JSON.stringify({
 product_key:'6eaddc132e5042be963ff8b151b577b92907858042e04baaa466',
 checkout_product_id:'711504',
-first_name:String(data.get('first_name')||'').trim(),
-last_name:String(data.get('last_name')||'').trim(),
-email:String(data.get('email')||'').trim(),
+first_name:leadFirstName,
+last_name:leadLastName,
+email:leadEmail,
 source_url:location.href,params:sourceParams
 })}).then(function(r){return r.json().then(function(j){if(!r.ok||!j.ok)throw new Error(j.error||'Unable to continue.');return j;});}).then(function(j){
 ['first_name','firstname','firstName','last_name','lastname','lastName','email','email_address','emailAddress'].forEach(function(k){params.delete(k)});params.set('first_name',j.checkout.first_name);params.set('last_name',j.checkout.last_name);params.set('email',j.checkout.email);
@@ -385,7 +403,10 @@ if(location.hostname&&lowerValue.indexOf(location.hostname.toLowerCase())!==-1)r
 try{var parsedValue=new URL(value);if(parsedValue.protocol==='http:'||parsedValue.protocol==='https:')return;}catch(ignore){}
 checkoutParams.append(k,value);
 });
-var next=new URL('https://www.checkout-ds24.com/product/711504');checkoutParams.forEach(function(v,k){next.searchParams.set(k,v)});next.hash='page';location.replace(next.toString());
+var checkoutEventId=uuid();
+if(window.ttq)window.ttq.track('InitiateCheckout',{content_id:'711504',value:24.12,currency:'USD'},{event_id:checkoutEventId});
+ttkServerEvent({event:'InitiateCheckout',event_id:checkoutEventId,url:location.href,email:j.checkout.email,properties:{content_id:'711504',value:24.12,currency:'USD'}});
+var next=new URL('https://www.checkout-ds24.com/product/711504');checkoutParams.forEach(function(v,k){next.searchParams.set(k,v)});next.hash='page';setTimeout(function(){location.replace(next.toString());},120);
 }).catch(function(e){console.error(e);if(button){button.disabled=false;button.textContent='Continue';}alert('Unable to continue. Please try again.');});
 return false;
 });
