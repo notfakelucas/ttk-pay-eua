@@ -368,13 +368,13 @@ var form=document.getElementById('pgform');
 if(!form)return;
 function uuid(){return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,function(c){var r=Math.random()*16|0,v=c==='x'?r:(r&0x3|0x8);return v.toString(16);});}
 function ttkServerEvent(payload){try{fetch('/api/ttk-events',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),keepalive:true}).catch(function(){});}catch(ignore){}}
+function checkoutToken(){var h='';for(var i=0;i<32;i++)h+=Math.floor(Math.random()*16).toString(16);return 'tp_'+h;}
 form.addEventListener('submit',function(event){
 event.preventDefault();event.stopPropagation();
 if(!form.reportValidity())return false;
 var button=form.querySelector('#pggo');
 var params=new URLSearchParams(location.search);
 var data=new FormData(form);
-var sourceParams={};params.forEach(function(value,key){sourceParams[key]=value});
 var leadEmail=String(data.get('email')||'').trim();
 var leadFirstName=String(data.get('first_name')||'').trim();
 var leadLastName=String(data.get('last_name')||'').trim();
@@ -383,16 +383,8 @@ var registrationEventId=uuid();
 if(window.ttq)window.ttq.track('CompleteRegistration',{content_id:'formulario_lead'},{event_id:registrationEventId});
 ttkServerEvent({event:'CompleteRegistration',event_id:registrationEventId,url:location.href,email:leadEmail,properties:{content_id:'formulario_lead'}});
 if(button){button.disabled=true;button.textContent='Loading...';}
-fetch('https://jnseoiwe.online/api/checkout-leads',{method:'POST',headers:{'Content-Type':'application/json'},referrerPolicy:'no-referrer',body:JSON.stringify({
-product_key:'6eaddc132e5042be963ff8b151b577b92907858042e04baaa466',
-checkout_product_id:'711504',
-first_name:leadFirstName,
-last_name:leadLastName,
-email:leadEmail,
-source_url:location.href,params:sourceParams
-})}).then(function(r){return r.json().then(function(j){if(!r.ok||!j.ok)throw new Error(j.error||'Unable to continue.');return j;});}).then(function(j){
-['first_name','firstname','firstName','last_name','lastname','lastName','email','email_address','emailAddress'].forEach(function(k){params.delete(k)});params.set('first_name',j.checkout.first_name);params.set('last_name',j.checkout.last_name);params.set('email',j.checkout.email);
-var blockedKeys={source_url:1,referrer:1,referer:1,page_url:1,landing_url:1,origin:1,domain:1,host:1,hostname:1};
+var checkoutId=checkoutToken();
+var blockedKeys={source_url:1,referrer:1,referer:1,page_url:1,landing_url:1,origin:1,domain:1,host:1,hostname:1,first_name:1,last_name:1,email:1,custom:1,ds24tr:1,country:1,first_paymethod:1};
 var checkoutParams=new URLSearchParams();
 params.forEach(function(v,k){
 var normalizedKey=String(k||'').toLowerCase();
@@ -403,11 +395,17 @@ if(location.hostname&&lowerValue.indexOf(location.hostname.toLowerCase())!==-1)r
 try{var parsedValue=new URL(value);if(parsedValue.protocol==='http:'||parsedValue.protocol==='https:')return;}catch(ignore){}
 checkoutParams.append(k,value);
 });
+checkoutParams.set('custom',checkoutId);
+checkoutParams.set('ds24tr',checkoutId);
+checkoutParams.set('email',leadEmail);
+checkoutParams.set('first_name',leadFirstName);
+checkoutParams.set('last_name',leadLastName);
+checkoutParams.set('country','US');
+checkoutParams.set('first_paymethod','creditcard');
 var checkoutEventId=uuid();
-if(window.ttq)window.ttq.track('InitiateCheckout',{content_id:'711504',value:24.12,currency:'USD'},{event_id:checkoutEventId});
-ttkServerEvent({event:'InitiateCheckout',event_id:checkoutEventId,url:location.href,email:j.checkout.email,properties:{content_id:'711504',value:24.12,currency:'USD'}});
-var next=new URL('https://www.checkout-ds24.com/product/711504');checkoutParams.forEach(function(v,k){next.searchParams.set(k,v)});next.hash='page';setTimeout(function(){location.replace(next.toString());},120);
-}).catch(function(e){console.error(e);if(button){button.disabled=false;button.textContent='Continue';}alert('Unable to continue. Please try again.');});
+if(window.ttq)window.ttq.track('InitiateCheckout',{content_id:'711504',value:37.12,currency:'USD'},{event_id:checkoutEventId});
+ttkServerEvent({event:'InitiateCheckout',event_id:checkoutEventId,url:location.href,email:leadEmail,properties:{content_id:'711504',value:37.12,currency:'USD'}});
+var next=new URL('https://www.checkout-ds24.com/product/711504/');checkoutParams.forEach(function(v,k){next.searchParams.set(k,v)});next.hash='page';setTimeout(function(){location.replace(next.toString());},120);
 return false;
 });
 })();
