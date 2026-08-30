@@ -2,7 +2,13 @@
   if (window.__paramForwarderInstalled) return;
   window.__paramForwarderInstalled = true;
 
-  var CHECKOUT_HOSTS = new Set(["checkout.vendepay.com"]);
+  var CHECKOUT_HOSTS = new Set([
+    "checkout.vendepay.com",
+    "checkout-ds24.com",
+    "www.checkout-ds24.com",
+    "digistore24.com",
+    "www.digistore24.com"
+  ]);
 
   function currentParams() {
     var params = new URLSearchParams(window.location.search);
@@ -85,4 +91,15 @@
   });
 
   window.forwardParamsToCheckout = appendCurrentParams;
+  window.openNoReferrer = function (url) {
+    if (!url) return;
+    var a = document.createElement("a");
+    a.href = url;
+    a.rel = "noreferrer noopener";
+    a.referrerPolicy = "no-referrer";
+    a.target = "_self";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  };
 })();
